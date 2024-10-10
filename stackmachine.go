@@ -8,21 +8,41 @@ import(
 
 type Stack struct{
 	StackNumbers []int
+	lastElementIndex int
 }
 
-func (stack *Stack) Pop() int{
-	lastElementIndex := len(stack.StackNumbers) -1
-	lastElement := stack.StackNumbers[lastElementIndex]
-	stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
+func NewStack() Stack{
+	var emptyStackNumbers []int = []int{}
+	return Stack{
+		emptyStackNumbers,
+		0,
+	}
+}
 
-	return lastElement
+// func (stack *Stack) Push() {
+	
+
+// }
+
+func (stack *Stack) Pop() (int, error){
+	lastElementIndex := stack.lastElementIndex
+
+	if (lastElementIndex >= 0){
+		lastElement := stack.StackNumbers[lastElementIndex]
+		stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
+		stack.lastElementIndex -= 1
+		return lastElement, nil
+	}else{
+		return -1, errors.New("Can not remove from empty stack.")
+	}
+
 }
 
 func StackMachine(commands string)(int, error) {
-	return 0, errors.New("")
+return 0, errors.New("")
 }
 
 func main() {
-	// main is unused - run using 
-	// go test ./...
+// main is unused - run using 
+// go test ./...
 }
