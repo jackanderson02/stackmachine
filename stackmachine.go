@@ -27,10 +27,10 @@ func NewStackFromNumbers(stackNumbers []int) *Stack{
 }
 
 
-// func (stack *Stack) Push() {
-	
-
-// }
+func (stack *Stack) Push(value int) {
+	stack.StackNumbers = append(stack.StackNumbers, value)
+	stack.lastElementIndex += 1
+}
 
 func (stack *Stack) Pop() (int, error){
 	lastElementIndex := stack.lastElementIndex
