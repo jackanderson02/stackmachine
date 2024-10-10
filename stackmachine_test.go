@@ -28,6 +28,42 @@ func TestStack_Pop(t *testing.T) {
 	}
 }
 
+func TestStack_Push(t *testing.T) {
+	stack := NewStack()
+
+	stack.Push(5)
+
+	if len(stack.StackNumbers) != 1 {
+		t.Errorf("expected stack size to be 1 after pushing, but got %d", len(stack.StackNumbers))
+	}
+
+	if stack.StackNumbers[0] != 5 {
+		t.Errorf("expected top element to be 5 after pushing, but got %d", stack.StackNumbers[0])
+	}
+
+	stack.Push(10)
+	stack.Push(15)
+
+	if len(stack.StackNumbers) != 3 {
+		t.Errorf("expected stack size to be 3 after pushing multiple elements, but got %d", len(stack.StackNumbers))
+	}
+
+	if stack.StackNumbers[2] != 15 {
+		t.Errorf("expected top element to be 15 after pushing, but got %d", stack.StackNumbers[2])
+	}
+
+	stackWithNumbers := NewStackFromNumbers([]int{1, 2, 3})
+	stackWithNumbers.Push(4)
+
+	if len(stackWithNumbers.StackNumbers) != 4 {
+		t.Errorf("expected stack size to be 4 after pushing, but got %d", len(stackWithNumbers.StackNumbers))
+	}
+
+	if stackWithNumbers.StackNumbers[3] != 4 {
+		t.Errorf("expected top element to be 4 after pushing, but got %d", stackWithNumbers.StackNumbers[3])
+	}
+}
+
 /*
 All these tests must pass for completion
 */
