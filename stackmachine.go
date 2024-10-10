@@ -47,9 +47,9 @@ func causesOverflow(number int) bool{
 }
 func (stack *Stack) Plus() error{
 	firstNumber, err := stack.Pop()
-	if(err != nil){
+	if(err == nil){
 		secondNumber, err := stack.Pop()
-		if(err != nil){
+		if(err == nil){
 			sum := firstNumber + secondNumber
 			if causesOverflow(sum){
 				return errors.New("Sum of two numbers would resulted in an overflow.")
