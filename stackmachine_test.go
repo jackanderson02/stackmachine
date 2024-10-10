@@ -84,9 +84,49 @@ func TestStack_Duplicate(t *testing.T) {
 	}
 }
 
+func TestStack_Plus(t *testing.T) {
+	stack := NewStackFromNumbers([]int{10, 20})
+
+	err := stack.Plus()
+	if err != nil {
+		t.Fatalf("expected no error, but got %v", err)
+	}
+
+	if len(stack.StackNumbers) != 1 {
+		t.Errorf("expected stack size to be 1 after addition, but got %d", len(stack.StackNumbers))
+	}
+
+	if stack.StackNumbers[0] != 30 {
+		t.Errorf("expected top element to be 30 after addition, but got %d", stack.StackNumbers[0])
+	}
+
+	stackWithOverflow := NewStackFromNumbers([]int{25000, 26000})
+
+	err = stackWithOverflow.Plus()
+	if err == nil {
+		t.Fatal("expected an overflow error, but got none")
+	}
+
+	if err.Error() != "Sum of two numbers would resulted in an overflow." {
+		t.Errorf("expected overflow error message, but got: %v", err)
+	}
+
+	stackWithOneElement := NewStackFromNumbers([]int{10})
+
+	err = stackWithOneElement.Plus()
+	if err == nil {
+		t.Fatal("expected an error due to insufficient elements, but got none")
+	}
+
+	if err.Error() != "Could not pop second number off stack." {
+		t.Errorf("expected insufficient elements error message, but got: %v", err)
+	}
+}
+
 /*
 All these tests must pass for completion
 */
+
 func TestAcceptanceTests(t *testing.T) {
 	tests := []struct {
 		name        string
