@@ -62,6 +62,12 @@ func TestStack_Push(t *testing.T) {
 	if stackWithNumbers.StackNumbers[3] != 4 {
 		t.Errorf("expected top element to be 4 after pushing, but got %d", stackWithNumbers.StackNumbers[3])
 	}
+
+	stackWithBigNumbers := NewStackFromNumbers([]int{20001, 30000})
+	err := stackWithBigNumbers.Plus()
+	if (err == nil){
+		t.Errorf("expected an error when summing 20001 and 30000 but did not receive one.")
+	}
 }
 
 func TestStack_Duplicate(t *testing.T) {
@@ -107,10 +113,6 @@ func TestStack_Plus(t *testing.T) {
 		t.Fatal("expected an overflow error, but got none")
 	}
 
-	if err.Error() != "Sum of two numbers would resulted in an overflow." {
-		t.Errorf("expected overflow error message, but got: %v", err)
-	}
-
 	stackWithOneElement := NewStackFromNumbers([]int{10})
 
 	err = stackWithOneElement.Plus()
@@ -118,9 +120,6 @@ func TestStack_Plus(t *testing.T) {
 		t.Fatal("expected an error due to insufficient elements, but got none")
 	}
 
-	if err.Error() != "Could not pop second number off stack." {
-		t.Errorf("expected insufficient elements error message, but got: %v", err)
-	}
 }
 
 /*

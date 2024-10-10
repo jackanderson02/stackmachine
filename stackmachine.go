@@ -31,8 +31,8 @@ func (stack *Stack) getLastElement() int {
 }
 
 func (stack *Stack) Push(value int) error {
-	if causesOverflow(value){
-		return errors.New("Pushing this value results in an overflow.")
+	if isNumberAllowedOnStack(value){
+		return errors.New("This value is not allowed on the stack.")
 	}
 	stack.StackNumbers = append(stack.StackNumbers, value)
 	stack.lastElementIndex += 1
@@ -47,27 +47,32 @@ func (stack *Stack) Duplicate(){
 	}
 }
 
-func causesOverflow(number int) bool{
-	return number >= 50000
+func isNumberAllowedOnStack(number int) bool{
+	return number >= 50000 || number <= 0
+}
+
+func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
+	firstNumber, errOne:= stack.Pop()
+	secondNumber, errTwo := stack.Pop()
+
+	if (errOne != nil || errTwo != nil){
+		returnedError := (errors.New("Failed to pop two numbers from the stack."))
+		err = &returnedError
+		return 0,0 
+	}else{
+		err = nil
+		return firstNumber, secondNumber
+	}
+
 }
 func (stack *Stack) Plus() error{
-	firstNumber, err := stack.Pop()
+	var err error;
+	firstNumber, secondNumber := stack.PopTwoMostRecentNumbers(&err)
 	if(err == nil){
-		secondNumber, err := stack.Pop()
-		if(err == nil){
-			sum := firstNumber + secondNumber
-			err = stack.Push(sum)
-			if (err != nil){
-				return errors.New("Sum of two numbers would result in an overflow.")
-			}
-			
-			return nil
-		}else{
-			return errors.New("Could not pop second number off stack.")
-		}
-	}else{
-		return errors.New("Could not pop first number off stack.")
+		sum := firstNumber + secondNumber
+		err = stack.Push(sum)
 	}
+	return err
 
 }
 
@@ -85,8 +90,19 @@ func (stack *Stack) Pop() (int, error){
 
 }
 
+func (stack *Stack) Minus() error{
+	var err error;
+	firstNumber, secondNumber := stack.PopTwoMostRecentNumbers(&err)
+	if(err == nil){
+		err = stack.Push(firstNumber - secondNumber)
+		return err
+	}
+	return err
+
+}
+
 func StackMachine(commands string)(int, error) {
-return 0, errors.New("")
+	return 0, errors.New("")
 }
 
 func main() {
