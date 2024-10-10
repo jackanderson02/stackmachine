@@ -2,7 +2,8 @@ package main
 
 import (
 	"errors"
-	"fmt"
+	"strings"
+	"strconv"
 )
 
 type Stack struct{
@@ -51,18 +52,23 @@ func isNumberAllowedOnStack(number int) bool{
 	return number >= 50000 || number <= 0
 }
 
-func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
-	firstNumber, errOne:= stack.Pop()
-	secondNumber, errTwo := stack.Pop()
+func (stack *Stack) hasTwoNumbers() bool{
+	return len(stack.StackNumbers) >= 2
+}
 
-	if (errOne != nil || errTwo != nil){
-		returnedError := (errors.New("Failed to pop two numbers from the stack."))
-		err = &returnedError
-		return 0,0 
-	}else{
+func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
+
+	if stack.hasTwoNumbers(){
+		firstNumber, _:= stack.Pop()
+		secondNumber, _ := stack.Pop()
 		err = nil
 		return firstNumber, secondNumber
+	}else{
+		returnedError := (errors.New("Failed to pop two numbers from the stack."))
+		err = &returnedError
+		return 0,0
 	}
+	
 
 }
 func (stack *Stack) Plus() error{
@@ -127,15 +133,57 @@ func (stack *Stack) Sum() error{
 			break
 		}
 		err = stack.Plus()
-		fmt.Println(stack.getLastElement())
 	}
 
 	return nil
-
 }
 
 func StackMachine(commands string)(int, error) {
-	return 0, errors.New("")
+	individualCommands := strings.Split(commands, " ")
+	stack := NewStack()
+	var err error;
+	for _, cmd := range individualCommands{
+		switch cmd{
+			case "POP":
+				_, err = stack.Pop()
+				if err != nil{
+					return -1, err
+				}
+			case "DUP":
+				stack.Duplicate()
+			case "+":
+				err = stack.Plus()
+				if err != nil{
+					return -1, err
+				}
+			case "-":
+				err = stack.Minus()
+				if err != nil{
+					return -1, err
+				}
+			case "*":
+				err = stack.Multiply()
+				if err != nil{
+					return -1, err
+				}
+			case "CLEAR":
+				stack.Clear()
+			case "SUM":
+				err = stack.Sum()
+				if err != nil{
+					return -1, err
+				}
+			default:
+				num, _:= strconv.Atoi(cmd)
+				stack.Push(num)
+		}
+	}
+
+	if stack.isEmpty(){
+		return -1, errors.New("Empty stack, nothing to return.")
+	}else{
+		return stack.getLastElement(), nil
+	}
 }
 
 func main() {
