@@ -3,7 +3,6 @@ package main
 
 import(
 	"errors"
-	"slices"
 )
 
 type Stack struct{
@@ -15,7 +14,7 @@ func NewStack() *Stack{
 	var emptyStackNumbers []int = []int{}
 	return &Stack{
 		emptyStackNumbers,
-		0,
+		-1,
 	}
 }
 
