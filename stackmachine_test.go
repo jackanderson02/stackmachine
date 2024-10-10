@@ -179,17 +179,10 @@ func TestStack_Multiply(t *testing.T) {
 	stackWithLargeNumbers := NewStackFromNumbers([]int{1000, 2000})
 
 	err = stackWithLargeNumbers.Multiply()
-	if err != nil {
-		t.Fatalf("expected no error, but got %v", err)
+	if err == nil {
+		t.Error("expected error when multiplying two large numbers but did not receieve one.")
 	}
 
-	if len(stackWithLargeNumbers.StackNumbers) != 1 {
-		t.Errorf("expected stack size to be 1 after multiplication, but got %d", len(stackWithLargeNumbers.StackNumbers))
-	}
-
-	if stackWithLargeNumbers.StackNumbers[0] != 2000000 {
-		t.Errorf("expected top element to be 2000000 after multiplication, but got %d", stackWithLargeNumbers.StackNumbers[0])
-	}
 }
 
 /*

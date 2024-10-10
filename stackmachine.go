@@ -110,6 +110,9 @@ func (stack *Stack) Multiply() error{
 	return err
 }
 
+func (stack *Stack) Clear() {
+	stack.StackNumbers = []int{}
+}
 func StackMachine(commands string)(int, error) {
 	return 0, errors.New("")
 }
