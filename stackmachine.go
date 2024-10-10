@@ -1,8 +1,8 @@
 package main
 
-
-import(
+import (
 	"errors"
+	"fmt"
 )
 
 type Stack struct{
@@ -124,6 +124,7 @@ func (stack *Stack) Sum() error{
 	
 	for{
 		err := stack.Plus()
+		fmt.Println(stack.getLastElement())
 		if (err != nil){
 			break
 		}
