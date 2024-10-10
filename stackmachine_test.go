@@ -65,7 +65,7 @@ func TestStack_Push(t *testing.T) {
 
 	stackWithBigNumbers := NewStackFromNumbers([]int{20001, 30000})
 	err := stackWithBigNumbers.Plus()
-	if (err == nil){
+	if err == nil {
 		t.Errorf("expected an error when summing 20001 and 30000 but did not receive one.")
 	}
 }
@@ -150,6 +150,45 @@ func TestStack_Minus(t *testing.T) {
 	err = stackWithOneElement.Minus()
 	if err == nil {
 		t.Fatal("expected an error due to insufficient elements, but got none")
+	}
+}
+
+func TestStack_Multiply(t *testing.T) {
+	stack := NewStackFromNumbers([]int{10, 5})
+
+	err := stack.Multiply()
+	if err != nil {
+		t.Fatalf("expected no error, but got %v", err)
+	}
+
+	if len(stack.StackNumbers) != 1 {
+		t.Errorf("expected stack size to be 1 after multiplication, but got %d", len(stack.StackNumbers))
+	}
+
+	if stack.StackNumbers[0] != 50 {
+		t.Errorf("expected top element to be 50 after multiplication, but got %d", stack.StackNumbers[0])
+	}
+
+	stackWithOneElement := NewStackFromNumbers([]int{10})
+
+	err = stackWithOneElement.Multiply()
+	if err == nil {
+		t.Fatal("expected an error due to insufficient elements, but got none")
+	}
+
+	stackWithLargeNumbers := NewStackFromNumbers([]int{1000, 2000})
+
+	err = stackWithLargeNumbers.Multiply()
+	if err != nil {
+		t.Fatalf("expected no error, but got %v", err)
+	}
+
+	if len(stackWithLargeNumbers.StackNumbers) != 1 {
+		t.Errorf("expected stack size to be 1 after multiplication, but got %d", len(stackWithLargeNumbers.StackNumbers))
+	}
+
+	if stackWithLargeNumbers.StackNumbers[0] != 2000000 {
+		t.Errorf("expected top element to be 2000000 after multiplication, but got %d", stackWithLargeNumbers.StackNumbers[0])
 	}
 }
 
