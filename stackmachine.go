@@ -11,13 +11,22 @@ type Stack struct{
 	lastElementIndex int
 }
 
-func NewStack() Stack{
+func NewStack() *Stack{
 	var emptyStackNumbers []int = []int{}
-	return Stack{
+	return &Stack{
 		emptyStackNumbers,
 		0,
 	}
 }
+
+
+func NewStackFromNumbers(stackNumbers []int) *Stack{
+	return &Stack{
+		stackNumbers,
+		0,
+	}
+}
+
 
 // func (stack *Stack) Push() {
 	
@@ -33,7 +42,7 @@ func (stack *Stack) Pop() (int, error){
 		stack.lastElementIndex -= 1
 		return lastElement, nil
 	}else{
-		return -1, errors.New("Can not remove from empty stack.")
+		return -1, errors.New("Cannot remove from empty stack.")
 	}
 
 }
