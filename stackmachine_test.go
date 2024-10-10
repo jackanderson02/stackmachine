@@ -185,6 +185,45 @@ func TestStack_Multiply(t *testing.T) {
 
 }
 
+func TestStack_Sum(t *testing.T) {
+	stack := NewStackFromNumbers([]int{10, 20, 30})
+
+	err := stack.Sum()
+	if err != nil {
+		t.Fatalf("expected no error, but got %v", err)
+	}
+
+	if len(stack.StackNumbers) != 1 {
+		t.Errorf("expected stack size to be 1 after SUM, but got %d", len(stack.StackNumbers))
+	}
+
+	if stack.StackNumbers[0] != 60 {
+		t.Errorf("expected top element to be 60 after SUM, but got %d", stack.StackNumbers[0])
+	}
+
+	emptyStack := NewStack()
+
+	err = emptyStack.Sum()
+	if err == nil {
+		t.Fatal("expected an error due to empty stack, but got none")
+	}
+
+	stackWithOneElement := NewStackFromNumbers([]int{42})
+
+	err = stackWithOneElement.Sum()
+	if err != nil {
+		t.Fatalf("expected no error, but got %v", err)
+	}
+
+	if len(stackWithOneElement.StackNumbers) != 1 {
+		t.Errorf("expected stack size to be 1 after SUM, but got %d", len(stackWithOneElement.StackNumbers))
+	}
+
+	if stackWithOneElement.StackNumbers[0] != 42 {
+		t.Errorf("expected top element to be 42 after SUM, but got %d", stackWithOneElement.StackNumbers[0])
+	}
+}
+
 /*
 All these tests must pass for completion
 */
