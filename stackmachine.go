@@ -42,6 +42,29 @@ func (stack *Stack) Duplicate(){
 	}
 }
 
+func causesOverflow(number int) bool{
+	return number >= 50000
+}
+func (stack *Stack) Plus() error{
+	firstNumber, err := stack.Pop()
+	if(err != nil){
+		secondNumber, err := stack.Pop()
+		if(err != nil){
+			sum := firstNumber + secondNumber
+			if causesOverflow(sum){
+				return errors.New("Sum of two numbers would resulted in an overflow.")
+			}
+			stack.Push(sum)
+			return nil
+		}else{
+			return errors.New("Could not pop second number off stack.")
+		}
+	}else{
+		return errors.New("Could not pop first number off stack.")
+	}
+
+}
+
 func (stack *Stack) Pop() (int, error){
 
 	if (stack.lastElementIndex >= 0){
