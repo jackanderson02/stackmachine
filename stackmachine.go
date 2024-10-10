@@ -38,7 +38,8 @@ func (stack *Stack) Pop() (int, error){
 
 	if (lastElementIndex >= 0){
 		lastElement := stack.StackNumbers[lastElementIndex]
-		stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
+		// stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
+		stack.StackNumbers = stack.StackNumbers[:lastElementIndex]
 		stack.lastElementIndex -= 1
 		return lastElement, nil
 	}else{
