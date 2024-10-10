@@ -2,8 +2,9 @@ package main
 
 import (
 	"errors"
-	"strings"
+	"fmt"
 	"strconv"
+	"strings"
 )
 
 type Stack struct{
@@ -33,12 +34,13 @@ func (stack *Stack) getLastElement() int {
 
 func (stack *Stack) Push(value int) error {
 	if isNumberAllowedOnStack(value){
+		stack.StackNumbers = append(stack.StackNumbers, value)
+		stack.lastElementIndex += 1
+		return nil
+	}else{
 		return errors.New("This value is not allowed on the stack.")
 	}
-	stack.StackNumbers = append(stack.StackNumbers, value)
-	stack.lastElementIndex += 1
 
-	return nil
 }
 
 func (stack *Stack) Duplicate(){
@@ -49,7 +51,7 @@ func (stack *Stack) Duplicate(){
 }
 
 func isNumberAllowedOnStack(number int) bool{
-	return number >= 50000 || number <= 0
+	return number <= 50000 &&  number >=0
 }
 
 func (stack *Stack) hasTwoNumbers() bool{
@@ -117,7 +119,10 @@ func (stack *Stack) Multiply() error{
 }
 
 func (stack *Stack) Clear() {
+
 	stack.StackNumbers = []int{}
+	stack.lastElementIndex = -1
+
 }
 
 func (stack *Stack) isEmpty() bool{
@@ -143,6 +148,8 @@ func StackMachine(commands string)(int, error) {
 	stack := NewStack()
 	var err error;
 	for _, cmd := range individualCommands{
+		fmt.Println(stack.StackNumbers)
+		fmt.Println(cmd)
 		switch cmd{
 			case "POP":
 				_, err = stack.Pop()
@@ -180,7 +187,7 @@ func StackMachine(commands string)(int, error) {
 	}
 
 	if stack.isEmpty(){
-		return -1, errors.New("Empty stack, nothing to return.")
+		return 0, errors.New("Empty stack, nothing to return.")
 	}else{
 		return stack.getLastElement(), nil
 	}
