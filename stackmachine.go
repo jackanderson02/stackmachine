@@ -100,6 +100,16 @@ func (stack *Stack) Minus() error{
 	return err
 }
 
+func (stack *Stack) Multiply() error{
+	var err error;
+	firstNumber, secondNumber := stack.PopTwoMostRecentNumbers(&err)
+	if(err == nil){
+		err = stack.Push(firstNumber * secondNumber)
+		return err
+	}
+	return err
+}
+
 func StackMachine(commands string)(int, error) {
 	return 0, errors.New("")
 }
