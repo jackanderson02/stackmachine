@@ -58,7 +58,6 @@ func (stack *Stack) hasTwoNumbers() bool{
 }
 
 func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
-
 	if stack.hasTwoNumbers(){
 		firstNumber, _:= stack.Pop()
 		secondNumber, _ := stack.Pop()
@@ -69,7 +68,6 @@ func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
 		*err = returnedError
 		return 0,0
 	}
-	
 }
 
 func (stack *Stack) Plus() error{
@@ -137,6 +135,7 @@ func (stack *Stack) Sum() error{
 
 	return nil
 }
+
 func isNumber(cmd string, num *int) bool{
 	number, err := strconv.Atoi(cmd)
 	if err == nil{
