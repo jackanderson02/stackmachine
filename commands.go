@@ -53,8 +53,11 @@ func isNumberAllowedOnStack(number int) bool{
 	return number <= 50000 &&  number >=0
 }
 
+func (stack *Stack) len() int{
+	return len(stack.StackNumbers)
+}
 func (stack *Stack) hasTwoNumbers() bool{
-	return len(stack.StackNumbers) >= 2
+	return stack.len() >= 2
 }
 
 func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
