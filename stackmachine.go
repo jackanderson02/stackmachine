@@ -30,9 +30,14 @@ func (stack *Stack) getLastElement() int {
 	return stack.StackNumbers[stack.lastElementIndex]
 }
 
-func (stack *Stack) Push(value int) {
+func (stack *Stack) Push(value int) error {
+	if causesOverflow(value){
+		return errors.New("Pushing this value results in an overflow.")
+	}
 	stack.StackNumbers = append(stack.StackNumbers, value)
 	stack.lastElementIndex += 1
+
+	return nil
 }
 
 func (stack *Stack) Duplicate(){
@@ -51,10 +56,11 @@ func (stack *Stack) Plus() error{
 		secondNumber, err := stack.Pop()
 		if(err == nil){
 			sum := firstNumber + secondNumber
-			if causesOverflow(sum){
-				return errors.New("Sum of two numbers would resulted in an overflow.")
+			err = stack.Push(sum)
+			if (err != nil){
+				return errors.New("Sum of two numbers would result in an overflow.")
 			}
-			stack.Push(sum)
+			
 			return nil
 		}else{
 			return errors.New("Could not pop second number off stack.")
