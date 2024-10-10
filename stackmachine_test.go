@@ -64,6 +64,26 @@ func TestStack_Push(t *testing.T) {
 	}
 }
 
+func TestStack_Duplicate(t *testing.T) {
+	stack := NewStackFromNumbers([]int{1, 2, 3})
+
+	stack.Duplicate()
+
+	if len(stack.StackNumbers) != 4 {
+		t.Errorf("expected stack size to be 4 after DUP, but got %d", len(stack.StackNumbers))
+	}
+
+	if stack.StackNumbers[3] != 3 {
+		t.Errorf("expected top element to be 3 after DUP, but got %d", stack.StackNumbers[3])
+	}
+
+	emptyStack := NewStack()
+
+	if len(emptyStack.StackNumbers) != 0 {
+		t.Errorf("expected stack size to remain 0 after DUP on empty stack, but got %d", len(emptyStack.StackNumbers))
+	}
+}
+
 /*
 All these tests must pass for completion
 */
