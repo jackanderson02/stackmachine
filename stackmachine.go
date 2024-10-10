@@ -35,7 +35,7 @@ func (stack *Stack) Push(value int) {
 	stack.lastElementIndex += 1
 }
 
-func (stack *Stack) Duplicate(value int){
+func (stack *Stack) Duplicate(){
 	// Non empty stack
 	if stack.lastElementIndex >= 0{
 		stack.Push(stack.getLastElement())
