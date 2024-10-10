@@ -78,7 +78,7 @@ func (stack *Stack) Plus() error{
 
 func (stack *Stack) Pop() (int, error){
 
-	if (stack.lastElementIndex >= 0){
+	if !stack.isEmpty(){
 		lastElement := stack.getLastElement()
 		// stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
 		stack.StackNumbers = stack.StackNumbers[:stack.lastElementIndex]
@@ -113,6 +113,26 @@ func (stack *Stack) Multiply() error{
 func (stack *Stack) Clear() {
 	stack.StackNumbers = []int{}
 }
+
+func (stack *Stack) isEmpty() bool{
+	return stack.lastElementIndex == -1
+}
+func (stack *Stack) Sum() error{
+	if (stack.isEmpty()){
+		return errors.New("Cannot sum over an empty stack.")
+	}
+	
+	for{
+		err := stack.Plus()
+		if (err != nil){
+			break
+		}
+	}
+
+	return nil
+
+}
+
 func StackMachine(commands string)(int, error) {
 	return 0, errors.New("")
 }
