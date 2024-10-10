@@ -121,13 +121,13 @@ func (stack *Stack) Sum() error{
 	if (stack.isEmpty()){
 		return errors.New("Cannot sum over an empty stack.")
 	}
-	
+	var err error
 	for{
-		err := stack.Plus()
-		fmt.Println(stack.getLastElement())
 		if (err != nil){
 			break
 		}
+		err = stack.Plus()
+		fmt.Println(stack.getLastElement())
 	}
 
 	return nil
