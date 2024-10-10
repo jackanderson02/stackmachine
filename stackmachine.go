@@ -98,7 +98,6 @@ func (stack *Stack) Minus() error{
 		return err
 	}
 	return err
-
 }
 
 func StackMachine(commands string)(int, error) {

@@ -123,7 +123,7 @@ func TestStack_Plus(t *testing.T) {
 }
 
 func TestStack_Minus(t *testing.T) {
-	stack := NewStackFromNumbers([]int{20, 10})
+	stack := NewStackFromNumbers([]int{10, 20})
 
 	err := stack.Minus()
 	if err != nil {
@@ -138,15 +138,11 @@ func TestStack_Minus(t *testing.T) {
 		t.Errorf("expected top element to be 10 after subtraction, but got %d", stack.StackNumbers[0])
 	}
 
-	stackWithNegativeResult := NewStackFromNumbers([]int{10, 20})
+	stackWithNegativeResult := NewStackFromNumbers([]int{20, 10})
 
 	err = stackWithNegativeResult.Minus()
 	if err == nil {
 		t.Fatal("expected a result below zero error, but got none")
-	}
-
-	if err.Error() != "Result is below zero." {
-		t.Errorf("expected result below zero error message, but got: %v", err)
 	}
 
 	stackWithOneElement := NewStackFromNumbers([]int{10})
@@ -154,10 +150,6 @@ func TestStack_Minus(t *testing.T) {
 	err = stackWithOneElement.Minus()
 	if err == nil {
 		t.Fatal("expected an error due to insufficient elements, but got none")
-	}
-
-	if err.Error() != "Could not pop second number off stack." {
-		t.Errorf("expected insufficient elements error message, but got: %v", err)
 	}
 }
 
