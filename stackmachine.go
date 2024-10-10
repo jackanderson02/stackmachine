@@ -26,19 +26,28 @@ func NewStackFromNumbers(stackNumbers []int) *Stack{
 	}
 }
 
+func (stack *Stack) getLastElement() int {
+	return stack.StackNumbers[stack.lastElementIndex]
+}
 
 func (stack *Stack) Push(value int) {
 	stack.StackNumbers = append(stack.StackNumbers, value)
 	stack.lastElementIndex += 1
 }
 
-func (stack *Stack) Pop() (int, error){
-	lastElementIndex := stack.lastElementIndex
+func (stack *Stack) Duplicate(value int){
+	// Non empty stack
+	if stack.lastElementIndex >= 0{
+		stack.Push(stack.getLastElement())
+	}
+}
 
-	if (lastElementIndex >= 0){
-		lastElement := stack.StackNumbers[lastElementIndex]
+func (stack *Stack) Pop() (int, error){
+
+	if (stack.lastElementIndex >= 0){
+		lastElement := stack.getLastElement()
 		// stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
-		stack.StackNumbers = stack.StackNumbers[:lastElementIndex]
+		stack.StackNumbers = stack.StackNumbers[:stack.lastElementIndex]
 		stack.lastElementIndex -= 1
 		return lastElement, nil
 	}else{
