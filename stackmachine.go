@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+
 )
 
 type Stack struct{
@@ -19,7 +20,6 @@ func NewStack() *Stack{
 		-1,
 	}
 }
-
 
 func NewStackFromNumbers(stackNumbers []int) *Stack{
 	return &Stack{
@@ -40,7 +40,6 @@ func (stack *Stack) Push(value int) error {
 	}else{
 		return errors.New("This value is not allowed on the stack.")
 	}
-
 }
 
 func (stack *Stack) Duplicate(){
@@ -63,16 +62,17 @@ func (stack *Stack) PopTwoMostRecentNumbers(err *error) (int, int){
 	if stack.hasTwoNumbers(){
 		firstNumber, _:= stack.Pop()
 		secondNumber, _ := stack.Pop()
-		err = nil
+		*err = nil
 		return firstNumber, secondNumber
 	}else{
-		returnedError := (errors.New("Failed to pop two numbers from the stack."))
-		err = &returnedError
+		returnedError := errors.New("Failed to pop two numbers from the stack.")
+		*err = returnedError
 		return 0,0
 	}
 	
 
 }
+
 func (stack *Stack) Plus() error{
 	var err error;
 	firstNumber, secondNumber := stack.PopTwoMostRecentNumbers(&err)
@@ -81,14 +81,12 @@ func (stack *Stack) Plus() error{
 		err = stack.Push(sum)
 	}
 	return err
-
 }
 
 func (stack *Stack) Pop() (int, error){
 
 	if !stack.isEmpty(){
 		lastElement := stack.getLastElement()
-		// stack.StackNumbers = slices.Delete(stack.StackNumbers, lastElementIndex, lastElementIndex)
 		stack.StackNumbers = stack.StackNumbers[:stack.lastElementIndex]
 		stack.lastElementIndex -= 1
 		return lastElement, nil
@@ -119,10 +117,8 @@ func (stack *Stack) Multiply() error{
 }
 
 func (stack *Stack) Clear() {
-
 	stack.StackNumbers = []int{}
 	stack.lastElementIndex = -1
-
 }
 
 func (stack *Stack) isEmpty() bool{
@@ -142,14 +138,24 @@ func (stack *Stack) Sum() error{
 
 	return nil
 }
+func isNumber(cmd string, num *int) bool{
+	number, err := strconv.Atoi(cmd)
+	if err == nil{
+		*num = number
+		return true
+	}
 
+	return false
+	
+}
 func StackMachine(commands string)(int, error) {
 	individualCommands := strings.Split(commands, " ")
 	stack := NewStack()
 	var err error;
+	var num int;
 	for _, cmd := range individualCommands{
-		fmt.Println(stack.StackNumbers)
-		fmt.Println(cmd)
+		// fmt.Println(stack.StackNumbers)
+		// fmt.Println(cmd)
 		switch cmd{
 			case "POP":
 				_, err = stack.Pop()
@@ -180,12 +186,18 @@ func StackMachine(commands string)(int, error) {
 				if err != nil{
 					return -1, err
 				}
+
 			default:
-				num, _:= strconv.Atoi(cmd)
-				stack.Push(num)
+				if isNumber(cmd, &num){
+					stack.Push(num)
+				}else{
+					// Non command given
+					return 0, errors.New("Invalid command.")
+				}
 		}
 	}
 
+	fmt.Println(stack.StackNumbers)
 	if stack.isEmpty(){
 		return 0, errors.New("Empty stack, nothing to return.")
 	}else{
