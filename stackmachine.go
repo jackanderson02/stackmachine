@@ -23,7 +23,7 @@ func NewStack() *Stack{
 func NewStackFromNumbers(stackNumbers []int) *Stack{
 	return &Stack{
 		stackNumbers,
-		0,
+		len(stackNumbers) - 1,
 	}
 }
 
