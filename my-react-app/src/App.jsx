@@ -1,9 +1,13 @@
 import "./App.css";
+import StackFrame from "./components/StackFrame";
 import Quote from "./Quote";
 import Spinner from "./Spinner";
 
 function App() {
-  return <Quote text="Man walks into a bar. Ouch. It was an iron bar" />;
+  return(
+    <StackFrame number={10}></StackFrame>
+    // <StackFrame number={20}></StackFrame>
+  )
 }
 
 export default App;
