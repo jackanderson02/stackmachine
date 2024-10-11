@@ -38,7 +38,7 @@ func TestStack_Push(t *testing.T) {
 		t.Errorf("expected stack size to be 1 after pushing, but got %d", len(stack.StackNumbers))
 	}
 
-	top := stack.getLastElement()
+	top := stack.Peek()
 	if top != 5 {
 		t.Errorf("expected top element to be 5 after pushing, but got %d", stack.StackNumbers[0])
 	}
@@ -50,7 +50,7 @@ func TestStack_Push(t *testing.T) {
 		t.Errorf("expected stack size to be 3 after pushing multiple elements, but got %d", len(stack.StackNumbers))
 	}
 
-	top = stack.getLastElement()
+	top = stack.Peek()
 	if top != 15 {
 		t.Errorf("expected top element to be 15 after pushing, but got %d", stack.StackNumbers[2])
 	}
@@ -82,7 +82,7 @@ func TestStack_Duplicate(t *testing.T) {
 		t.Errorf("expected stack size to be 4 after DUP, but got %d", len(stack.StackNumbers))
 	}
 
-	top := stack.getLastElement()
+	top := stack.Peek()
 	if top != 3 {
 		t.Errorf("expected top element to be 3 after DUP, but got %d", stack.StackNumbers[3])
 	}
@@ -105,7 +105,7 @@ func TestStack_Plus(t *testing.T) {
 		t.Errorf("expected stack size to be 1 after addition, but got %d", len(stack.StackNumbers))
 	}
 
-	top := stack.getLastElement()
+	top := stack.Peek()
 	if top != 30 {
 		t.Errorf("expected top element to be 30 after addition, but got %d", stack.StackNumbers[0])
 	}
@@ -138,7 +138,7 @@ func TestStack_Minus(t *testing.T) {
 		t.Errorf("expected stack size to be 1 after subtraction, but got %d", len(stack.StackNumbers))
 	}
 
-	top := stack.getLastElement()
+	top := stack.Peek()
 	if top != 10 {
 		t.Errorf("expected top element to be 10 after subtraction, but got %d", stack.StackNumbers[0])
 	}
@@ -169,7 +169,7 @@ func TestStack_Multiply(t *testing.T) {
 	if stack.len() != 1 {
 		t.Errorf("expected stack size to be 1 after multiplication, but got %d", len(stack.StackNumbers))
 	}
-	top := stack.getLastElement()
+	top := stack.Peek()
 
 	if top != 50 {
 		t.Errorf("expected top element to be 50 after multiplication, but got %d", stack.StackNumbers[0])
@@ -199,11 +199,11 @@ func TestStack_Sum(t *testing.T) {
 		t.Fatalf("expected no error, but got %v", err)
 	}
 
-	if  stack.len() != 1 {
+	if stack.len() != 1 {
 		t.Errorf("expected stack size to be 1 after SUM, but got %d", len(stack.StackNumbers))
 	}
 
-	top := stack.getLastElement()
+	top := stack.Peek()
 	if top != 60 {
 		t.Errorf("expected top element to be 60 after SUM, but got %d", stack.StackNumbers[0])
 	}
@@ -226,7 +226,7 @@ func TestStack_Sum(t *testing.T) {
 		t.Errorf("expected stack size to be 1 after SUM, but got %d", len(stackWithOneElement.StackNumbers))
 	}
 
-	top = stackWithOneElement.getLastElement()
+	top = stackWithOneElement.Peek()
 	if top != 42 {
 		t.Errorf("expected top element to be 42 after SUM, but got %d", top)
 	}
@@ -283,7 +283,7 @@ func TestAcceptanceTests(t *testing.T) {
 		if test.shouldError {
 			if err == nil {
 				t.Errorf("%s (%s) Expected error, but received nil", test.name, test.commands)
-			} 
+			}
 		} else if got != test.expected {
 			t.Errorf("%s (%s) got %v, want %v", test.name, test.commands, got, test.expected)
 		}
